@@ -1,4 +1,18 @@
 const { app } = require('electron')
+
+// =========================================================================
+// Antigravity Zero-Latency & Extreme Performance Hardware Acceleration Flags
+// =========================================================================
+if (process.platform === 'win32') {
+  app.commandLine.appendSwitch('ignore-gpu-blocklist')
+  app.commandLine.appendSwitch('enable-gpu-rasterization')
+  app.commandLine.appendSwitch('enable-zero-copy')
+  app.commandLine.appendSwitch('num-raster-threads', '2')
+  app.commandLine.appendSwitch('disable-features', 'DropInputEventsWhilePaintHolding,CalculateNativeWinOcclusion')
+  app.commandLine.appendSwitch('js-flags', '--max-old-space-size=2048')
+  console.log('[PINOKIO PERF] Windows 11 & Intel HD Graphics 520 zero-latency flags active')
+}
+
 const Pinokiod = require("pinokiod")
 const config = require('./config')
 const pinokiod = new Pinokiod(config)
